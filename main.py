@@ -13,6 +13,8 @@ class WebCrawler:
             return
         self.visited.add(url)
 
+        if base_url is None:
+            base_url = url
         try:
             response = requests.get(url)
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -90,10 +92,10 @@ class WebCrawlerTests(unittest.TestCase):
     def test_search(self):
         crawler = WebCrawler()
         crawler.index["page1"] = "This has the keyword"
-        crawler.index["page2"] = "No keyword here"
+        crawler.index["page2"] = "No match here"
 
         results = crawler.search("keyword")
-        self.assertEqual(results, ["page2"])
+        self.assertEqual(results, ["page1"])
 
     @patch('sys.stdout')
     def test_print_results(self, mock_stdout):
