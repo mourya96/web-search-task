@@ -44,7 +44,7 @@ class WebCrawler:
 def main():
     crawler = WebCrawler()
     start_url = "https://example.com"
-    crawler.craw(start_url)
+    crawler.crawl(start_url)
 
     keyword = "test"
     results = crawler.search(keyword)
@@ -105,7 +105,3 @@ class WebCrawlerTests(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()  # Run unit tests
     main()  # Run your main application logic 
-
-
-if __name__ == "__main__":
-    main()
