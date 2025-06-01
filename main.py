@@ -18,13 +18,11 @@ class WebCrawler:
             soup = BeautifulSoup(response.text, 'html.parser')
             self.index[url] = soup.get_text()
 
-            for link in soup.find_all('a'):
-                href = link.get('href')
-                if href:
-                    if urlparse(href).netloc:
-                        href = urljoin(base_url or url, href)
-                    if not href.startswith(base_url or url):
-                        self.crawl(href, base_url=base_url or url)
+            for link in soup.find_all('a', href=True):
+                href = urljoin(url, link.get('href'))
+                if href not in self.visited and urlparse(href).netloc == urlparse(base_url).netloc:
+                    self.crawl(href, base_url)
+
         except Exception as e:
             print(f"Error crawling {url}: {e}")
 
